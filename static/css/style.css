@@ -1,0 +1,353 @@
+/* --- ESTILOS BASE Y MODO OSCURO --- */
+body { 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+    line-height: 1.6; 
+    margin: 0; 
+    padding: 0;
+    color: #e0e0e0; 
+    
+    /* Fondo tecnológico oscuro */
+    background-color: #0f172a;
+    background-image: 
+        radial-gradient(at 0% 0%, rgb(8, 8, 8) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(5, 5, 5, 0.3) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgb(6, 6, 6) 0px, transparent 50%);
+    background-attachment: fixed; /* Mantiene el fondo estático al hacer scroll */
+}
+
+/* --- PORTADA SUPERIOR FULL WIDTH --- */
+.portada-container {
+    height: 300px;
+    width: 100%;
+    background-image: url('../img/portada-codigo.jpg'); 
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-bottom: 1px solid #333;
+}
+
+.app-container {
+    display: flex;
+    min-height: 100vh; /* Ajustado para el layout completo */
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* --- PANEL LATERAL FIJO (STICKY) --- */
+.sidebar {
+    width: 320px;
+    
+    /* Efecto Glassmorphism */
+    background-color: rgba(30, 30, 30, 0.4); /* Semitransparente */
+    backdrop-filter: blur(15px); /* Desenfoque de cristal */
+    -webkit-backdrop-filter: blur(15px); /* Soporte para Safari */
+    border-right: 1px solid rgba(255, 255, 255, 0.1); /* Borde brillante sutil */
+    
+    padding: 50px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    text-align: left; 
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow-y: auto; 
+}
+
+.perfil-foto {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background-color: #555; 
+    border: 4px solid #1e1e1e; 
+    margin-top: 0; 
+    margin-bottom: 25px;
+    
+    /* Tu foto de perfil */
+    background-image: url('../img/foto-mia.jpeg');
+    background-size: cover;
+    background-position: center;
+    
+    position: relative;
+    z-index: 10;
+}
+
+.sidebar h1 {
+    color: #ffffff; 
+    margin: 0 0 10px 0; 
+    font-size: 1.8em;
+    line-height: 1.2;
+}
+
+.sidebar h2 { 
+    color: #aaaaaa; 
+    font-weight: 400; 
+    font-size: 1.05rem; 
+    margin-bottom: 30px;
+}
+
+.contacto-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.contacto-links a {
+    color: #66b2ff; 
+    text-decoration: none;
+    font-weight: 500;
+    background: #252526; 
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+    border: 1px solid #333;
+}
+
+.contacto-links a:hover {
+    background: #333333;
+}
+
+.contacto-links span {
+    color: #aaaaaa;
+    font-size: 0.9em;
+    padding-top: 10px;
+}
+
+/* --- CONTENIDO PRINCIPAL (Desplazable) --- */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 320px); /* Asegura que tome el resto del espacio */
+}
+
+.contenido-interno {
+    padding: 40px 60px;
+}
+
+/* --- SECCIONES INTERNAS --- */
+section {
+    /* Efecto Glassmorphism */
+    background: rgba(30, 30, 30, 0.4);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); /* Sombra suave para dar volumen */
+    
+    padding: 35px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+}
+
+/* --- HABILIDADES --- */
+.grid-habilidades {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.habilidad-grupo strong {
+    display: block;
+    margin-bottom: 12px;
+    color: #ffffff;
+    border-bottom: 1px dashed #444;
+    padding-bottom: 5px;
+}
+
+/* --- EXPERIENCIA LABORAL --- */
+.timeline {
+    border-left: 2px solid #3498db;
+    padding-left: 20px;
+    margin-left: 10px;
+}
+
+.exp-item {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.exp-item::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #3498db;
+    border-radius: 50%;
+    left: -27px;
+    top: 5px;
+}
+
+.exp-item h4 {
+    margin: 0 0 5px 0;
+    color: #66b2ff;
+}
+
+.empresa { color: #ffffff; font-weight: bold; }
+.periodo {
+    font-size: 0.85em;
+    color: #aaaaaa;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* --- PROYECTOS --- */
+.grid-proyectos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.proyecto-card { 
+    /* Efecto Glassmorphism */
+    background: rgba(24, 24, 24, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 4px solid #3498db; 
+    
+    padding: 25px; 
+    border-radius: 6px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.proyecto-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    background: rgba(40, 40, 40, 0.5); /* Se ilumina un poco al pasar el mouse */
+}
+
+.proyecto-card h4 {
+    margin-top: 0;
+    color: #ffffff;
+}
+
+.tech-tag { 
+    background: #252526; 
+    color: #66b2ff;
+    padding: 5px 12px; 
+    border-radius: 15px; 
+    font-size: 0.8em; 
+    margin-right: 8px; 
+    display: inline-block;
+    margin-top: 15px;
+    border: 1px solid #333;
+}
+
+.github-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 8px 16px;
+    background-color: #3498db;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.github-link:hover {
+    background-color: #2980b9;
+}
+
+/* --- EDUCACIÓN --- */
+.lista-educacion {
+    list-style-type: none;
+    padding: 0;
+}
+
+.lista-educacion li {
+    margin-bottom: 15px;
+    padding-left: 15px;
+    position: relative;
+    color: #e0e0e0;
+}
+
+.lista-educacion li::before {
+    content: "•";
+    color: #3498db;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+.estado {
+    color: #aaaaaa;
+    font-size: 0.9em;
+}
+/* =========================================
+    DISEÑO RESPONSIVE  
+========================================= */
+@media (max-width: 900px) {
+    .app-container {
+        flex-direction: column;
+    }
+
+    /* 'Desempaqueta' el contenedor principal para poder reordenar sus hijos */
+    .main-content {
+        display: contents; 
+    }
+
+    /* 1. La portada va arriba del todo */
+    .portada-container {
+        order: 1;
+        height: 200px; /* Un poco más estrecha en celulares */
+    }
+
+    /* 2. El panel lateral se convierte en un bloque central debajo de la portada */
+    .sidebar {
+        order: 2;
+        width: 100%;
+        height: auto;
+        position: static; /* Quitamos el anclaje fijo (sticky) */
+        border-right: none;
+        border-bottom: 1px solid #333;
+        align-items: center; /* Centramos todo */
+        text-align: center;
+        padding: 20px;
+    }
+
+    /* Superponemos la foto circular sobre la portada */
+    .perfil-foto {
+        margin-top: -80px; 
+        margin-bottom: 15px;
+        width: 130px; /* Reducimos un poco el tamaño de la foto */
+        height: 130px;
+    }
+
+    /* Botones de contacto en fila en lugar de columna */
+    .contacto-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .contacto-links a {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+
+    /* 3. El contenido principal va al final */
+    .contenido-interno {
+        order: 3;
+        padding: 20px 15px;
+    }
+
+    section {
+        padding: 25px 20px;
+    }
+
+    /* Forzar que los grids (habilidades y proyectos) pasen a 1 sola columna */
+    .grid-habilidades, .grid-proyectos {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Ajustar la línea de tiempo de la experiencia */
+    .timeline {
+        padding-left: 15px;
+    }
+}

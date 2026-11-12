@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio | Luis Felipe Rivero Lagos</title>
+    <!-- Versión actualizada para forzar la carga de los nuevos estilos -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2.4">
+</head>
+<body>
+    <div class="app-container">
+        <!-- PANEL LATERAL -->
+        <aside class="sidebar">
+            <div class="perfil-foto"></div>
+            <h1>Luis Felipe Rivero Lagos</h1>
+            <h2>Analista Programador & Desarrollador de Software</h2>
+            
+            <div class="contacto-links">
+                <a href="mailto:{{ contacto.email }}">Email</a>
+                <a href="tel:{{ contacto.telefono }}">Teléfono</a>
+                <a href="{{ contacto.linkedin }}" target="_blank">LinkedIn</a>
+                <span>📍 {{ contacto.ubicacion }}</span>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main-content">
+            <!-- PORTADA SUPERIOR (Ahora fluye con el contenido principal) -->
+            <header class="portada-container"></header>
+            
+            <!-- SECCIONES DE INFORMACIÓN -->
+            <div class="contenido-interno">
+                <section id="sobre-mi">
+                    <h3>Sobre Mí</h3>
+                    <p>{{ sobre_mi }}</p>
+                </section>
+
+                <section id="habilidades">
+                    <h3>Habilidades Técnicas</h3>
+                    <div class="grid-habilidades">
+                        {% for hab in habilidades %}
+                        <div class="habilidad-grupo">
+                            <strong>{{ hab.categoria }}</strong>
+                            <div class="tags">
+                                {% for item in hab.lista %}
+                                <span class="tech-tag">{{ item }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <section id="experiencia">
+                    <h3>Experiencia Laboral</h3>
+                    <div class="timeline">
+                        {% for exp in experiencia %}
+                        <div class="exp-item">
+                            <h4>{{ exp.cargo }} en <span class="empresa">{{ exp.empresa }}</span></h4>
+                            <span class="periodo">{{ exp.periodo }}</span>
+                            <p>{{ exp.detalle }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <section id="proyectos">
+                    <h3>Proyectos Destacados</h3>
+                    <div class="grid-proyectos">
+                        {% for proyecto in proyectos %}
+                        <article class="proyecto-card">
+                            <h4>{{ proyecto.nombre }}</h4>
+                            <p>{{ proyecto.descripcion }}</p>
+                            <div class="tags">
+                                {% for tech in proyecto.tecnologias %}
+                                <span class="tech-tag">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+                        </article>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <section id="proyectos-personales">
+                    <h3>Proyectos Personales y Repositorios</h3>
+                    <div class="grid-proyectos">
+                        {% for repo in proyectos_personales %}
+                        <article class="proyecto-card">
+                            <h4>{{ repo.nombre }}</h4>
+                            <p>{{ repo.descripcion }}</p>
+                            <div class="tags">
+                                {% for tech in repo.tecnologias %}
+                                <span class="tech-tag">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+                            <a href="{{ repo.url }}" target="_blank" class="github-link">Ver en GitHub</a>
+                        </article>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <section id="educacion">
+                    <h3>Formación Académica</h3>
+                    <ul class="lista-educacion">
+                        {% for estudio in estudios %}
+                        <li><strong>{{ estudio.titulo }}</strong> <br> <span class="estado">{{ estudio.estado }}</span></li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
