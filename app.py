@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    # Nueva sección de contacto
+    # Sección de contacto
     contacto = {
         "telefono": "+56 9 4035 6059",
         "email": "lriverol32@gmail.com",
@@ -12,19 +12,19 @@ def home():
         "ubicacion": "Puente Alto, RM, Chile"
     }
     
-    # Nueva sección sobre ti
+    # Sección sobre ti
     sobre_mi = "En búsqueda de nuevos desafíos que me permitan aplicar y expandir mi formación académica en un entorno colaborativo. Aporto experiencia en equipos ágiles (Scrum), donde he liderado la administración de incidencias y validación de requerimientos. Mi enfoque se centra en la calidad del software, participando en etapas clave de desarrollo a través de testing funcional y estático."
 
-    # Nuevas habilidades categorizadas (CORREGIDO: 'lista' en lugar de 'items')
+    # Habilidades categorizadas y ampliadas para coincidir con Devicon
     habilidades = [
-        {"categoria": "Lenguajes & Backend", "lista": ["Python", "PHP", ".NET", "Codelgniter"]},
-        {"categoria": "Frontend", "lista": ["JavaScript (DOM, Ajax, JQuery)", "HTML"]},
-        {"categoria": "Bases de Datos", "lista": ["SQL Server", "Sybase SQL", "MySQL","MongoDB", "Scripts & SPs"]},
-        {"categoria": "Herramientas & Cloud", "lista": ["Azure", "Jenkins (Pipelines)", "SFTP", "Microservicios"]},
+        {"categoria": "Lenguajes & Backend", "lista": ["Python", "C#", "PHP", ".NET", "Codelgniter"]},
+        {"categoria": "Frontend", "lista": ["React", "Angular", "TypeScript", "JavaScript (DOM, Ajax, JQuery)", "HTML"]},
+        {"categoria": "Bases de Datos", "lista": ["SQL Server", "MySQL", "MongoDB", "Sybase SQL", "Scripts & SPs"]},
+        {"categoria": "Herramientas & Cloud", "lista": ["Azure", "Docker", "Git", "Jenkins (Pipelines)", "n8n", "SFTP", "Microservicios"]},
         {"categoria": "Metodologías", "lista": ["Scrum", "UML", "Métricas SLA"]}
     ]
 
-    # Nueva sección de experiencia laboral
+    # Sección de experiencia laboral
     experiencia = [
         {
             "cargo": "Ingeniero de software",

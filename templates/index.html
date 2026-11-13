@@ -6,6 +6,8 @@
     <title>Portafolio | Luis Felipe Rivero Lagos</title>
     <!-- Versión actualizada para forzar la carga de los nuevos estilos -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2.4">
+    <!-- CDN de Devicon para los logos de tecnologías -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
 </head>
 <body>
     <div class="app-container">
@@ -25,7 +27,7 @@
 
         <!-- CONTENIDO PRINCIPAL -->
         <main class="main-content">
-            <!-- PORTADA SUPERIOR (Ahora fluye con el contenido principal) -->
+            <!-- PORTADA SUPERIOR -->
             <header class="portada-container"></header>
             
             <!-- SECCIONES DE INFORMACIÓN -->
@@ -37,13 +39,51 @@
 
                 <section id="habilidades">
                     <h3>Habilidades Técnicas</h3>
+                    
+                    <!-- Mapeo de textos exactos a iconos de Devicon -->
+                    {% set icon_map = {
+                        'Python': 'devicon-python-plain',
+                        'PHP': 'devicon-php-plain',
+                        '.NET': 'devicon-dotnetcore-plain',
+                        'CodeIgniter': 'devicon-codeigniter-plain',
+                        'Codelgniter': 'devicon-codeigniter-plain',
+                        'JavaScript (DOM, Ajax, JQuery)': 'devicon-javascript-plain',
+                        'HTML': 'devicon-html5-plain',
+                        'SQL Server': 'devicon-microsoftsqlserver-plain',
+                        'MySQL': 'devicon-mysql-plain',
+                        'MongoDB': 'devicon-mongodb-plain',
+                        'Azure': 'devicon-azure-plain',
+                        'Jenkins (Pipelines)': 'devicon-jenkins-line',
+                        'C#': 'devicon-csharp-plain',
+                        'React': 'devicon-react-original',
+                        'TypeScript': 'devicon-typescript-plain',
+                        'Docker': 'devicon-docker-plain',
+                        'Git': 'devicon-git-plain',
+                        'Angular': 'devicon-angularjs-plain',
+                        'n8n': 'devicon-n8n-plain',
+                        'Node.js': 'devicon-nodejs-plain',
+                        'Azure OpenAI': 'devicon-azure-plain',
+                        'Azure Logic Apps': 'devicon-azure-plain',
+                        'Azure Functions': 'devicon-azure-plain',
+                        'Azure App Service': 'devicon-azure-plain',
+                        'Flask': 'devicon-flask-original',
+                        'JavaScript': 'devicon-javascript-plain',
+                    } %}
+
                     <div class="grid-habilidades">
                         {% for hab in habilidades %}
                         <div class="habilidad-grupo">
                             <strong>{{ hab.categoria }}</strong>
                             <div class="tags">
                                 {% for item in hab.lista %}
-                                <span class="tech-tag">{{ item }}</span>
+                                <span class="tech-tag">
+                                    {% if item == 'n8n' %}
+                                        <img src="https://cdn.simpleicons.org/n8n/EA4B71" alt="n8n" style="width: 1.1em; vertical-align: middle; margin-right: 5px;" />
+                                    {% elif item in icon_map %}
+                                        <i class="{{ icon_map[item] }} colored"></i>
+                                        {% endif %}
+                                        {{ item }}
+                                </span>
                                 {% endfor %}
                             </div>
                         </div>
@@ -73,7 +113,12 @@
                             <p>{{ proyecto.descripcion }}</p>
                             <div class="tags">
                                 {% for tech in proyecto.tecnologias %}
-                                <span class="tech-tag">{{ tech }}</span>
+                                <span class="tech-tag">
+                                    {% if tech in icon_map %}
+                                        <i class="{{ icon_map[tech] }} colored"></i>
+                                    {% endif %}
+                                    {{ tech }}
+                                </span>
                                 {% endfor %}
                             </div>
                         </article>
@@ -90,7 +135,12 @@
                             <p>{{ repo.descripcion }}</p>
                             <div class="tags">
                                 {% for tech in repo.tecnologias %}
-                                <span class="tech-tag">{{ tech }}</span>
+                                <span class="tech-tag">
+                                    {% if tech in icon_map %}
+                                        <i class="{{ icon_map[tech] }} colored"></i>
+                                    {% endif %}
+                                    {{ tech }}
+                                </span>
                                 {% endfor %}
                             </div>
                             <a href="{{ repo.url }}" target="_blank" class="github-link">Ver en GitHub</a>
