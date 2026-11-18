@@ -125,6 +125,7 @@ body {
 
 .contenido-interno {
     padding: 40px 60px;
+    margin-top: -15px; /* Cambia este valor (ej. -25px o -10px) hasta que calce perfectamente con tu barra */
 }
 
 /* --- SECCIONES INTERNAS --- */
@@ -361,4 +362,39 @@ section {
     .timeline {
         padding-left: 15px;
     }
+}
+/* =========================================
+   MENÚ DE NAVEGACIÓN SUPERIOR
+   ========================================= */
+.top-nav-menu {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; 
+    gap: 15px; 
+    margin: 30px auto 10px auto; /* 30px arriba, auto lados, 10px abajo */
+    padding: 0 15px;
+}
+
+.nav-boton {
+    background-color: transparent;
+    color: #e0e0e0;
+    border: 1px solid #66b2ff;
+    padding: 10px 22px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-boton:hover {
+    background-color: #66b2ff;
+    color: #121212;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(102, 178, 255, 0.3);
+}
+
+/* Efecto de deslizamiento suave para los enlaces ancla */
+html {
+    scroll-behavior: smooth;
 }
