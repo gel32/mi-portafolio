@@ -48,9 +48,19 @@ def home():
         "ubicacion": "Puente Alto, RM, Chile"
     }
     
-    # Sección sobre ti
-    sobre_mi = "En búsqueda de nuevos desafíos que me permitan aplicar y expandir mi formación académica en un entorno colaborativo. Aporto experiencia en equipos ágiles (Scrum), donde he liderado la administración de incidencias y validación de requerimientos. Mi enfoque se centra en la calidad del software, participando en etapas clave de desarrollo a través de testing funcional y estático."
-
+# Sección sobre ti
+    sobre_mi = {
+        "saludo": "¡Hola! Soy Luis Rivero 👋",
+        "titular": "Analista Programador",
+        "subtitulo": "enfocado en el desarrollo de aplicaciones web, integraciones de pago y gestión de bases de datos.",
+        "descripcion": "En búsqueda de nuevos desafíos que me permitan aplicar y expandir mi formación académica en un entorno colaborativo. Aporto experiencia en equipos ágiles (Scrum), donde he liderado la administración de incidencias y validación de requerimientos. Mi enfoque se centra en la calidad del software, participando en etapas clave de desarrollo a través de testing funcional y estático.",
+        "puntos": [
+            "💻 Desarrollo soluciones web tanto en frontend como en backend.",
+            "🗄️ Experiencia conectando aplicaciones con bases de datos corporativas (<strong>SQL Server</strong>) e integrando pasarelas de pago (<strong>Flow</strong>).",
+            "⚡ Automatización y manejo de flujos de trabajo con <strong>n8n</strong> y <strong>Azure Logic Apps</strong>.",
+            "📍 Santiago, Chile 🇨🇱"
+        ]
+    }
     # Habilidades categorizadas y ampliadas para coincidir con Devicon
     habilidades = [
         {"categoria": "Lenguajes & Backend", "lista": ["Python", "C#", "PHP", ".NET", "Codelgniter"]},
