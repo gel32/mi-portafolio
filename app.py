@@ -2,6 +2,42 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
+# Proyectos destacados a nivel global para compartirlos entre rutas
+proyectos = [
+    {
+        "id": "react-flow-payment",
+        "nombre": "React Flow Payment Integration",
+        "descripcion": "Prueba de concepto para integración de flujos de pago en interfaces modernas.",
+        "tecnologias": ["React", "JavaScript"],
+        "github_url": "https://github.com/gel32/react-flow-payment-integration/blob/main/README.md",
+        "detalle_completo": "Prueba de concepto desarrollada en React y JavaScript enfocada en la integración de pasarelas y flujos de pago (Flow) dentro de interfaces web modernas. Incluye manejo de estados transaccionales, redirecciones de pago y vistas de resultado para ofrecer una experiencia clara y confiable al usuario final."
+    },
+    {
+        "id": "asistente-emma",
+        "nombre": "Asistente Virtual IA 'Emma'",
+        "descripcion": "Construcción y despliegue de un asistente virtual corporativo inteligente para inge.cl utilizando servicios en la nube.",
+        "tecnologias": ["TypeScript", "Azure OpenAI", "Azure Logic Apps", "Azure Functions"],
+        "github_url": "https://github.com/gel32/asistente-virtual-ia-react-azure/blob/main/README.md",
+        "detalle_completo": "Diseño, construcción y puesta en producción de 'Emma', el asistente virtual corporativo inteligente para inge.cl. La arquitectura se apoyó en el ecosistema cloud de Microsoft Azure: Azure OpenAI para el procesamiento de lenguaje natural y respuestas contextualizadas, Azure Logic Apps para la orquestación de flujos de negocio y derivación de consultas, y Azure Functions para la ejecución de lógica serverless de integración."
+    },
+    {
+        "id": "factoring-sii-certificados",
+        "nombre": "Herramienta Factoring SII & Certificados",
+        "descripcion": "Desarrollo de utilidades web para el registro de datos del SII, búsqueda de empresas y generación masiva de certificados de crédito.",
+        "tecnologias": ["Python", "Flask", "Azure App Service"],
+        "github_url": "https://github.com/gel32/herramienta-factoring-sii/blob/main/README.md",
+        "detalle_completo": "Creación y despliegue en producción de aplicaciones web internas desarrolladas con Python y Flask, alojadas en Azure App Service. Estas herramientas agilizaron la operación diaria del área comercial y de factoring, permitiendo el registro estructurado de credenciales y datos del SII, búsqueda histórica de empresas con ordenamiento dinámico de columnas y la emisión automatizada de certificados de crédito."
+    },
+    {
+        "id": "login-usuario",
+        "nombre": "Login Usuario",
+        "descripcion": "Módulo base de autenticación y gestión de sesiones.",
+        "tecnologias": ["PHP", "MySQL", "Frontend", "Backend"],
+        "github_url": "https://github.com/gel32/LoginUsuario/blob/main/README.md",
+        "detalle_completo": "Módulo base diseñado para la autenticación de usuarios y administración de sesiones. Implementa la estructura fundamental de validación de credenciales, manejo de estados de acceso y protección de rutas tanto en frontend como en backend."
+    }
+]
+
 @app.route('/')
 def home():
     # Sección de contacto
@@ -51,64 +87,20 @@ def home():
             "detalle": "Creación de Formularios Web, manejo del DOM a través de JavaScript, e implementación de editor integrado en CodeIgniter. Despliegues mediante SFTP y configuración de pipelines en Jenkins."
         }
     ]
-
-    # Proyectos existentes
-    proyectos = [
-        {
-            "nombre": "Portal Privado InGe!",
-            "descripcion": "Desarrollo frontend y backend de servicios, implementación de actualización de perfiles, modales de enlace con clave tributaria del SII y vistas de gestión de garantías.",
-            "tecnologias": ["Web APIs", "Bases de Datos", "Frontend"]
-        },
-        {
-            "nombre": "Asistente Virtual IA 'Emma'",
-            "descripcion": "Construcción y despliegue de un asistente virtual corporativo inteligente para inge.cl utilizando servicios en la nube.",
-            "tecnologias": ["Azure OpenAI", "Azure Logic Apps", "Azure Functions"]
-        },
-        {
-            "nombre": "Herramienta Factoring SII & Certificados",
-            "descripcion": "Desarrollo de utilidades web para el registro de datos del SII, búsqueda de empresas y generación masiva de certificados de crédito.",
-            "tecnologias": ["Python", "Flask", "Azure App Service"]
-        },
-        {
-            "nombre": "Integración Pasarela de Pagos Getnet",
-            "descripcion": "Integración de la API de la pasarela de pagos Getnet en los servicios backend para el procesamiento transaccional.",
-            "tecnologias": [".NET", "API Rest"]
-        }
-    ]
-    
-    proyectos_personales = [
-        {
-            "nombre": "Herramienta Factoring SII",
-            "descripcion": "Versión open-source del registro de datos del SII.",
-            "tecnologias": ["Python", "Flask"],
-            "url": "https://github.com/gel32/herramienta-factoring-sii"
-        },
-        {
-            "nombre": "React Flow Payment Integration",
-            "descripcion": "Prueba de concepto para integración de flujos de pago en interfaces modernas.",
-            "tecnologias": ["React", "JavaScript"],
-            "url": "https://github.com/gel32/react-flow-payment-integration"
-        },
-        {
-            "nombre": "Login Usuario",
-            "descripcion": "Módulo base de autenticación y gestión de sesiones.",
-            "tecnologias": ["Frontend", "Backend"],
-            "url": "https://github.com/gel32/LoginUsuario"
-        },
-        {
-            "nombre": "Testing",
-            "descripcion": "Entorno de pruebas y automatización de procesos.",
-            "tecnologias": ["QA", "Scripts"],
-            "url": "https://github.com/gel32/Testing"
-        }
-    ]
     
     estudios = [
         {"titulo": "Ingeniería en Informática", "estado": "Proceso de titulación (2026)"},
         {"titulo": "Analista Programador", "estado": "Titulado (2023)"}
     ]
 
-    return render_template('index.html', contacto=contacto, sobre_mi=sobre_mi, habilidades=habilidades, experiencia=experiencia, proyectos=proyectos, proyectos_personales=proyectos_personales, estudios=estudios)
+    return render_template('index.html', contacto=contacto, sobre_mi=sobre_mi, habilidades=habilidades, experiencia=experiencia, proyectos=proyectos, estudios=estudios)
+
+@app.route('/proyecto/<proyecto_id>')
+def proyecto_detalle(proyecto_id):
+    proyecto = next((p for p in proyectos if p['id'] == proyecto_id), None)
+    if not proyecto:
+        return "Proyecto no encontrado", 404
+    return render_template('proyecto.html', proyecto=proyecto)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
