@@ -1,0 +1,59 @@
+{# Mapeo único de nombres de tecnologías a iconos de Devicon (compartido por todas las páginas) #}
+{% set icon_map = {
+    'Python': 'devicon-python-plain',
+    'PHP': 'devicon-php-plain',
+    '.NET': 'devicon-dotnetcore-plain',
+    'CodeIgniter': 'devicon-codeigniter-plain',
+    'Codelgniter': 'devicon-codeigniter-plain',
+    'JavaScript (DOM, Ajax, JQuery)': 'devicon-javascript-plain',
+    'HTML': 'devicon-html5-plain',
+    'SQL Server': 'devicon-microsoftsqlserver-plain',
+    'MySQL': 'devicon-mysql-plain',
+    'MongoDB': 'devicon-mongodb-plain',
+    'Azure': 'devicon-azure-plain',
+    'Jenkins (Pipelines)': 'devicon-jenkins-line',
+    'C#': 'devicon-csharp-plain',
+    'React': 'devicon-react-original',
+    'TypeScript': 'devicon-typescript-plain',
+    'Docker': 'devicon-docker-plain',
+    'Git': 'devicon-git-plain',
+    'Angular': 'devicon-angularjs-plain',
+    'n8n': 'devicon-n8n-plain',
+    'Node.js': 'devicon-nodejs-plain',
+    'Azure OpenAI': 'devicon-azure-plain',
+    'Azure Logic Apps': 'devicon-azure-plain',
+    'Azure Functions': 'devicon-azure-plain',
+    'Azure App Service': 'devicon-azure-plain',
+    'Flask': 'devicon-flask-original',
+    'JavaScript': 'devicon-javascript-plain',
+} %}
+
+{# Icono de una tecnología (decorativo: el nombre siempre va como texto al lado) #}
+{% macro tech_icon(item) -%}
+    {% if item == 'n8n' %}
+        <img src="https://cdn.simpleicons.org/n8n/EA4B71" alt="" aria-hidden="true" class="tech-icon-img" loading="lazy" decoding="async" />
+    {% elif item in icon_map %}
+        <i class="{{ icon_map[item] }} colored" aria-hidden="true"></i>
+    {% endif %}
+{%- endmacro %}
+
+{# Etiqueta de tecnología con su icono (si existe) #}
+{% macro tech_tag(item) -%}
+<span class="tech-tag">
+    {{ tech_icon(item) }}
+    {{ item }}
+</span>
+{%- endmacro %}
+
+{# Icono principal de un proyecto: el de la primera tecnología que tenga icono #}
+{% macro project_icon(tecnologias) -%}
+    {% set principal = tecnologias | select('in', icon_map) | first %}
+    <span class="proyecto-icono" aria-hidden="true">
+        {% if principal %}{{ tech_icon(principal) }}{% else %}<i class="devicon-github-original"></i>{% endif %}
+    </span>
+{%- endmacro %}
+
+{# Icono de GitHub para botones #}
+{% macro github_icon() -%}
+<i class="devicon-github-original" aria-hidden="true"></i>
+{%- endmacro %}

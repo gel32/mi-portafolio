@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% from '_macros.html' import tech_tag, project_icon, github_icon %}
+
+{% block title %}{{ proyecto.nombre }} | Luis Felipe Rivero Lagos{% endblock %}
+{% block description %}{{ proyecto.descripcion }}{% endblock %}
+
+{% block body %}
+    <main class="detalle-pagina" id="contenido" tabindex="-1">
+        <!-- Migas de navegación -->
+        <nav class="migas" aria-label="Ruta de navegación">
+            <ol>
+                <li><a href="{{ url_for('home') }}">Inicio</a></li>
+                <li><a href="{{ url_for('home') }}#proyectos">Proyectos</a></li>
+                <li aria-current="page">{{ proyecto.nombre }}</li>
+            </ol>
+        </nav>
+
+        <article class="detalle-card">
+            <header class="detalle-cabecera">
+                {{ project_icon(proyecto.tecnologias) }}
+                <p class="detalle-eyebrow">Proyecto</p>
+                <h1 class="detalle-titulo">{{ proyecto.nombre }}</h1>
+                <p class="detalle-resumen">{{ proyecto.descripcion }}</p>
+            </header>
+
+            <div class="tags detalle-tags">
+                {% for tech in proyecto.tecnologias %}
+                    {{ tech_tag(tech) }}
+                {% endfor %}
+            </div>
+
+            <p class="detalle-texto">
+                {{ proyecto.detalle_completo }}
+            </p>
+
+            <div class="detalle-acciones">
+                {% if proyecto.github_url %}
+                <a href="{{ proyecto.github_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-primario">{{ github_icon() }} Ver repositorio en GitHub <span aria-hidden="true">&rarr;</span></a>
+                {% endif %}
+                <a href="{{ url_for('home') }}#proyectos" class="btn btn-secundario"><span aria-hidden="true">&larr;</span> Volver a Proyectos</a>
+            </div>
+        </article>
+    </main>
+{% endblock %}

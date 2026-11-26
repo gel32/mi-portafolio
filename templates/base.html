@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Portafolio | Luis Felipe Rivero Lagos{% endblock %}</title>
+    <meta name="description" content="{% block description %}Portafolio de Luis Felipe Rivero Lagos, Analista Programador & Desarrollador de Software.{% endblock %}">
+    <meta name="theme-color" content="#0b1120">
+    <meta name="color-scheme" content="dark">
+    <!-- Tipografías: Inter (texto) y JetBrains Mono (fechas, etiquetas) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+    <!-- Versión actualizada para forzar la carga de los nuevos estilos -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=3.4">
+    <!-- CDN de Devicon para los logos de tecnologías (versión fijada) -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.18.0/devicon.min.css" />
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+    <!-- Enlace para teclado / lectores de pantalla: salta el menú y va directo al contenido -->
+    <a href="#contenido" class="saltar-contenido">Saltar al contenido</a>
+
+    <!-- Fondo animado de partículas de luz (decorativo) -->
+    <canvas id="fondo-particulas" aria-hidden="true"></canvas>
+
+    {% block body %}{% endblock %}
+
+    <script src="{{ url_for('static', filename='js/fondo.js') }}?v=1.1" defer></script>
+</body>
+</html>

@@ -1,400 +1,1171 @@
-/* --- ESTILOS BASE Y MODO OSCURO --- */
-body { 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-    line-height: 1.6; 
-    margin: 0; 
+/* =========================================
+   SISTEMA DE DISEÑO (TOKENS)
+   Tema oscuro único. Todos los colores, radios, sombras
+   y espaciados se definen aquí y se reutilizan abajo.
+   ========================================= */
+:root {
+    color-scheme: dark;
+
+    /* --- Fondo y superficies (escala pizarra) --- */
+    --bg: #0b1120;
+    --surface-1: rgba(15, 23, 42, 0.25);     /* secciones y panel lateral (translúcido: deja ver el fondo) */
+    --surface-2: rgba(30, 41, 59, 0.50);     /* tarjetas, etiquetas, botones */
+    --surface-3: rgba(51, 65, 85, 0.60);     /* estado hover de superficies */
+    --border: rgba(148, 163, 184, 0.14);
+    --border-strong: rgba(148, 163, 184, 0.28);
+
+    /* --- Texto (contraste AA sobre todas las superficies) --- */
+    --text-strong: #f8fafc;   /* títulos            18:1 */
+    --text: #e2e8f0;          /* texto general      15:1 */
+    --text-muted: #94a3b8;    /* secundario          7:1 */
+    --text-subtle: #7c8aa3;   /* metadatos         4.6:1 */
+
+    /* --- Acento único --- */
+    --accent: #60a5fa;
+    --accent-hover: #93c5fd;
+    --accent-strong: #3b82f6;
+    --accent-soft: rgba(96, 165, 250, 0.12);
+    --accent-glow: rgba(96, 165, 250, 0.30);
+    --accent-alt: #818cf8;    /* índigo: halos del fondo y partículas */
+    --on-accent: #0b1120;     /* texto sobre botones de acento */
+
+    /* --- Estados --- */
+    --success: #4ade80;
+    --success-soft: rgba(74, 222, 128, 0.12);
+    --success-border: rgba(74, 222, 128, 0.30);
+
+    /* --- Tipografía (Inter + JetBrains Mono desde Google Fonts) --- */
+    --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+
+    /* Escala tipográfica (fluida en los tamaños grandes) */
+    --fs-xs: 0.75rem;                                   /* 12px  etiquetas, metadatos */
+    --fs-sm: 0.875rem;                                  /* 14px  botones, secundarios */
+    --fs-base: 1rem;                                    /* 16px  texto general */
+    --fs-md: 1.125rem;                                  /* 18px  subtítulos (h3) */
+    --fs-lg: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);    /* 20-24px  títulos de sección (h2) */
+    --fs-xl: clamp(1.75rem, 1.4rem + 1.5vw, 2.25rem);   /* 28-36px  nombre / título de página (h1) */
+
+    --lh-tight: 1.2;
+    --lh-snug: 1.4;
+    --lh-base: 1.65;
+    --measure: 68ch;          /* ancho máximo cómodo de lectura */
+
+    /* --- Espaciado (escala base 4px; se aplica en la Fase 3) --- */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 40px;
+    --space-8: 48px;
+    --space-9: 64px;
+
+    /* --- Radios --- */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-pill: 999px;
+
+    /* --- Sombras --- */
+    --shadow-1: 0 4px 14px rgba(2, 6, 23, 0.35);
+    --shadow-2: 0 12px 32px rgba(2, 6, 23, 0.50);
+
+    /* --- Efecto cristal --- */
+    --glass-blur: 2px;     /* mínimo: las partículas se ven a través de los paneles (contraste AA verificado) */
+
+    /* --- Movimiento --- */
+    --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --dur-fast: 0.15s;
+    --dur: 0.25s;
+}
+
+/* --- ESTILOS BASE --- */
+html {
+    scroll-behavior: smooth; /* Deslizamiento suave para los enlaces ancla */
+}
+
+body {
+    font-family: var(--font-sans);
+    font-size: var(--fs-base);
+    line-height: var(--lh-base);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    margin: 0;
     padding: 0;
-    color: #e0e0e0; 
-    
-    /* Fondo tecnológico oscuro */
-    background-color: #0f172a;
-    background-image: 
-        radial-gradient(at 0% 0%, rgb(8, 8, 8) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(5, 5, 5, 0.3) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgb(6, 6, 6) 0px, transparent 50%);
+    color: var(--text);
+
+    /* Fondo oscuro con halos sutiles del color de acento */
+    background-color: var(--bg);
+    background-image:
+        radial-gradient(ellipse at 0% 0%, rgba(96, 165, 250, 0.10) 0px, transparent 45%),
+        radial-gradient(ellipse at 100% 100%, rgba(129, 140, 248, 0.08) 0px, transparent 45%);
     background-attachment: fixed; /* Mantiene el fondo estático al hacer scroll */
 }
 
-/* --- PORTADA SUPERIOR FULL WIDTH --- */
-.portada-container {
-    height: 300px;
-    width: 100%;
-    background-image: url('../img/portada-codigo.jpg'); 
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    border-bottom: 1px solid #333;
+::selection {
+    background: var(--accent-glow);
+    color: var(--text-strong);
 }
 
+/* =========================================
+   FONDO ANIMADO DE PARTÍCULAS (static/js/fondo.js)
+   ========================================= */
+#fondo-particulas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;   /* nunca intercepta clics */
+    display: block;
+}
+
+/* Viñeta: oscurece los bordes para que el centro respire */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(120% 90% at 50% 40%, transparent 45%, rgba(5, 9, 20, 0.75) 100%);
+}
+
+/* Todo el contenido va por encima del fondo */
+.app-container,
+.detalle-pagina {
+    position: relative;
+    z-index: 1;
+}
+
+/* En pantallas táctiles el fondo se atenúa (no hay mouse que lo mueva) */
+@media (max-width: 759px), (pointer: coarse) {
+    #fondo-particulas {
+        opacity: 0.6;
+    }
+}
+
+/* =========================================
+   ACCESIBILIDAD
+   ========================================= */
+
+/* Foco visible solo al navegar con teclado (no al hacer clic) */
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+}
+
+/* El destino del enlace "Saltar al contenido" recibe foco sin mostrar contorno */
+[tabindex="-1"]:focus {
+    outline: none;
+}
+
+/* Enlace "Saltar al contenido": oculto hasta que recibe foco con Tab */
+.saltar-contenido {
+    position: absolute;
+    top: var(--space-3);
+    left: var(--space-3);
+    z-index: 100;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-weight: 600;
+    text-decoration: none;
+    transform: translateY(-200%);
+    transition: transform var(--dur) var(--ease);
+}
+
+.saltar-contenido:focus-visible {
+    transform: translateY(0);
+    outline-color: var(--text-strong);
+}
+
+/* --- JERARQUÍA TIPOGRÁFICA BASE --- */
+h1, h2, h3 {
+    color: var(--text-strong);
+    line-height: var(--lh-tight);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+}
+
+p, li {
+    text-wrap: pretty;
+}
+
+strong {
+    color: var(--text-strong);
+    font-weight: 600;
+}
+
+/* =========================================
+   LAYOUT PRINCIPAL
+   Escritorio (≥ 900px): dos columnas con CSS Grid.
+       ┌─────────┬──────────────┐
+       │         │ portada      │
+       │ sidebar │ menú (fijo)  │
+       │ (fijo)  │ contenido    │
+       └─────────┴──────────────┘
+   Móvil (< 900px): una columna en el orden del HTML
+   (portada → perfil → menú → contenido).
+   ========================================= */
 .app-container {
-    display: flex;
-    min-height: 100vh; /* Ajustado para el layout completo */
+    --sidebar-w: clamp(280px, 24vw, 340px);
+    display: grid;
+    grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+        "sidebar portada"
+        "sidebar nav"
+        "sidebar main";
+    min-height: 100vh;
     max-width: 1400px;
     margin: 0 auto;
 }
 
+/* --- PORTADA SUPERIOR --- */
+.portada-container {
+    grid-area: portada;
+    height: 220px;
+    /* Versión optimizada (2400px, ~120 KB). El original sigue en static/img/ */
+    background-image: url('../img/portada-codigo-2400.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-bottom: 1px solid var(--border);
+}
+
 /* --- PANEL LATERAL FIJO (STICKY) --- */
 .sidebar {
-    width: 320px;
-    
+    grid-area: sidebar;
+    align-self: start;        /* necesario para que "sticky" funcione dentro del grid */
+
     /* Efecto Glassmorphism */
-    background-color: rgba(30, 30, 30, 0.4); /* Semitransparente */
-    backdrop-filter: blur(15px); /* Desenfoque de cristal */
-    -webkit-backdrop-filter: blur(15px); /* Soporte para Safari */
-    border-right: 1px solid rgba(255, 255, 255, 0.1); /* Borde brillante sutil */
-    
-    padding: 50px 30px;
+    background-color: var(--surface-1);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border-right: 1px solid var(--border);
+
+    padding: var(--space-8) var(--space-6);
     display: flex;
     flex-direction: column;
-    align-items: flex-start; 
-    text-align: left; 
+    align-items: flex-start;
+    text-align: left;
     position: sticky;
     top: 0;
     height: 100vh;
     box-sizing: border-box;
-    overflow-y: auto; 
+    overflow-y: auto;
 }
 
+/* Foto de perfil (<img> con texto alternativo; recorte circular con object-fit) */
 .perfil-foto {
+    display: block;
+    flex-shrink: 0;
+    box-sizing: border-box;
     width: 160px;
     height: 160px;
+    object-fit: cover;
+    object-position: center;
     border-radius: 50%;
-    background-color: #555; 
-    border: 4px solid #1e1e1e; 
-    margin-top: 0; 
-    margin-bottom: 25px;
-    
-    /* Tu foto de perfil */
-    background-image: url('../img/foto-mia.jpeg');
-    background-size: cover;
-    background-position: center;
-    
+    background-color: var(--surface-2);
+    border: 4px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--border-strong), var(--shadow-1);
+    margin-top: 0;
+    margin-bottom: var(--space-5);
     position: relative;
     z-index: 10;
 }
 
 .sidebar h1 {
-    color: #ffffff; 
-    margin: 0 0 10px 0; 
-    font-size: 1.8em;
-    line-height: 1.2;
+    margin: 0 0 var(--space-2) 0;
+    font-size: var(--fs-xl);
+    font-weight: 800;
+    letter-spacing: -0.03em;
 }
 
-.sidebar h2 { 
-    color: #aaaaaa; 
-    font-weight: 400; 
-    font-size: 1.05rem; 
-    margin-bottom: 30px;
+.sidebar-rol {
+    color: var(--text-muted);
+    font-weight: 400;
+    font-size: var(--fs-base);
+    line-height: var(--lh-snug);
+    margin: 0 0 var(--space-6) 0;
 }
 
 .contacto-links {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: var(--space-3);
     width: 100%;
 }
 
 .contacto-links a {
-    color: #66b2ff; 
+    color: var(--accent);
     text-decoration: none;
-    font-weight: 500;
-    background: #252526; 
-    padding: 12px 15px;
-    border-radius: 8px;
-    transition: background 0.2s ease;
-    border: 1px solid #333;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    background: var(--surface-2);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
 
 .contacto-links a:hover {
-    background: #333333;
+    background: var(--surface-3);
+    border-color: var(--border-strong);
+    color: var(--accent-hover);
 }
 
 .contacto-links span {
-    color: #aaaaaa;
-    font-size: 0.9em;
-    padding-top: 10px;
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    padding-top: var(--space-2);
 }
 
 /* --- CONTENIDO PRINCIPAL (Desplazable) --- */
-.main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    width: calc(100% - 320px); /* Asegura que tome el resto del espacio */
-}
-
 .contenido-interno {
-    padding: 40px 60px;
-    margin-top: -15px; /* Cambia este valor (ej. -25px o -10px) hasta que calce perfectamente con tu barra */
+    grid-area: main;
+    min-width: 0;
+    padding: var(--space-6) clamp(var(--space-5), 4vw, var(--space-9)) var(--space-9);
 }
 
 /* --- SECCIONES INTERNAS --- */
 section {
     /* Efecto Glassmorphism */
-    background: rgba(30, 30, 30, 0.4);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); /* Sombra suave para dar volumen */
-    
-    padding: 35px;
-    border-radius: 12px;
-    margin-bottom: 40px;
+    background: var(--surface-1);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-2);
+
+    padding: var(--space-7);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-8);
+
+    /* Al saltar a un ancla, el título no queda oculto bajo el menú fijo */
+    scroll-margin-top: calc(var(--nav-h, 72px) + var(--space-4));
+}
+
+section:last-child {
+    margin-bottom: 0;
+}
+
+/* Título de sección (h2) con línea corta de acento */
+.seccion-titulo {
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    margin: 0 0 var(--space-6) 0;
+    padding-bottom: var(--space-3);
+    position: relative;
+}
+
+.seccion-titulo::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 3px;
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+}
+
+/* --- SOBRE MÍ --- */
+.sobre-saludo {
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--text-strong);
+    line-height: var(--lh-tight);
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--space-2) 0;
+}
+
+.sobre-titular {
+    font-size: var(--fs-md);
+    line-height: var(--lh-snug);
+    color: var(--text-muted);
+    max-width: var(--measure);
+    margin: 0;
+}
+
+.sobre-titular strong {
+    color: var(--accent);
+}
+
+.divisor {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: var(--space-5) 0;
+}
+
+.sobre-descripcion {
+    max-width: var(--measure);
+    margin: 0 0 var(--space-5) 0;
+}
+
+.sobre-puntos {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    max-width: var(--measure);
+}
+
+/* Sangría francesa: las líneas que continúan quedan alineadas
+   con el texto y no bajo el emoji inicial */
+.sobre-puntos li {
+    padding-left: 1.75em;
+    text-indent: -1.75em;
 }
 
 /* --- HABILIDADES --- */
 .grid-habilidades {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+    gap: var(--space-4);
 }
 
-.habilidad-grupo strong {
-    display: block;
-    margin-bottom: 12px;
-    color: #ffffff;
-    border-bottom: 1px dashed #444;
-    padding-bottom: 5px;
+/* Cada categoría es una mini tarjeta */
+.habilidad-grupo {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+}
+
+/* Categoría de habilidades (h3) como "eyebrow" en versalitas */
+.habilidad-titulo {
+    margin: 0 0 var(--space-4) 0;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+/* Contenedor de etiquetas: espaciado uniforme al pasar a otra línea */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
 }
 
 /* --- EXPERIENCIA LABORAL --- */
+/* La línea y los puntos se calculan a partir de dos variables,
+   así quedan siempre centrados entre sí */
 .timeline {
-    border-left: 2px solid #3498db;
-    padding-left: 20px;
-    margin-left: 10px;
+    --timeline-gutter: var(--space-6);   /* espacio entre línea y texto */
+    --dot: 12px;                          /* diámetro del punto */
+    position: relative;
+    padding-left: var(--timeline-gutter);
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: calc(var(--dot) / 2 - 1px);
+    top: var(--space-2);
+    bottom: var(--space-2);
+    width: 2px;
+    border-radius: 2px;
+    background: linear-gradient(to bottom, var(--accent-strong), var(--border));
 }
 
 .exp-item {
-    margin-bottom: 30px;
+    margin-bottom: var(--space-7);
     position: relative;
 }
 
+.exp-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Punto hueco para puestos anteriores */
 .exp-item::before {
     content: '';
     position: absolute;
-    width: 12px;
-    height: 12px;
-    background: #3498db;
+    box-sizing: border-box;
+    width: var(--dot);
+    height: var(--dot);
+    left: calc(-1 * var(--timeline-gutter));
+    top: 7px;                 /* centrado con la primera línea del cargo */
     border-radius: 50%;
-    left: -27px;
-    top: 5px;
+    background: var(--bg);
+    border: 2px solid var(--accent);
 }
 
-.exp-item h4 {
-    margin: 0 0 5px 0;
-    color: #66b2ff;
+/* Puesto actual: punto relleno con brillo */
+.exp-actual::before {
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft), 0 0 14px var(--accent-glow);
 }
 
-.empresa { color: #ffffff; font-weight: bold; }
+.exp-cargo {
+    margin: 0 0 var(--space-2) 0;
+    font-size: var(--fs-md);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: var(--lh-snug);
+    color: var(--accent);
+}
+
+.empresa {
+    color: var(--text-strong);
+    font-weight: 700;
+}
+
+/* Periodo como "píldora" monoespaciada */
 .periodo {
-    font-size: 0.85em;
-    color: #aaaaaa;
-    display: block;
-    margin-bottom: 10px;
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.02em;
+    color: var(--text-muted);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    padding: 2px var(--space-3);
+    margin-bottom: var(--space-3);
+}
+
+.exp-actual .periodo {
+    color: var(--accent);
+    background: var(--accent-soft);
+    border-color: rgba(96, 165, 250, 0.30);
+}
+
+.exp-item p {
+    max-width: var(--measure);
+    margin: 0;
 }
 
 /* --- PROYECTOS --- */
 .grid-proyectos {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 25px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: var(--space-5);
 }
 
-.proyecto-card { 
-    /* Efecto Glassmorphism */
-    background: rgba(24, 24, 24, 0.4);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-left: 4px solid #3498db; 
-    
-    padding: 25px; 
-    border-radius: 6px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* Tarjeta en columna: el pie de acciones se empuja al fondo,
+   así todas las tarjetas de una fila alinean sus botones */
+.proyecto-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: var(--space-5);
+    border-radius: var(--radius-md);
+    transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease),
+                background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 
 .proyecto-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-    background: rgba(40, 40, 40, 0.5); /* Se ilumina un poco al pasar el mouse */
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-2);
+    background: var(--surface-3);
+    border-color: rgba(96, 165, 250, 0.45);
 }
 
-.proyecto-card h4 {
-    margin-top: 0;
-    color: #ffffff;
+/* Icono del stack principal */
+.proyecto-icono {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    font-size: 1.5rem;
+    border-radius: var(--radius-md);
+    background: var(--accent-soft);
+    border: 1px solid rgba(96, 165, 250, 0.25);
+    color: var(--accent);
+    margin-bottom: var(--space-4);
+}
+
+.proyecto-icono .tech-icon-img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.proyecto-titulo {
+    margin: 0 0 var(--space-2) 0;
+    font-size: var(--fs-md);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: var(--lh-snug);
+}
+
+.proyecto-titulo a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease);
+}
+
+.proyecto-titulo a:hover {
+    color: var(--accent-hover);
+}
+
+.proyecto-descripcion {
+    margin: 0;
+    font-size: 0.9375rem;   /* 15px */
+    color: var(--text-muted);
+}
+
+.proyecto-card .tags {
+    margin-top: var(--space-4);
+}
+
+/* Pie de la tarjeta */
+.proyecto-acciones {
+    margin-top: auto;              /* empuja el pie al fondo */
+    padding-top: var(--space-5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+}
+
+/* Separador del pie (dentro del padding para no romper el margin-top: auto) */
+.proyecto-acciones::before {
+    content: '';
+    flex-basis: 100%;
+    height: 1px;
+    background: var(--border);
+    margin-bottom: var(--space-1);
+}
+
+.enlace-detalle {
+    color: var(--accent);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease);
+}
+
+.enlace-detalle span {
+    display: inline-block;
+    transition: transform var(--dur) var(--ease);
+}
+
+.enlace-detalle:hover {
+    color: var(--accent-hover);
+}
+
+.enlace-detalle:hover span {
+    transform: translateX(3px);
 }
 
 .tech-tag {
-    background: #252526;
-    color: #66b2ff;
+    background: var(--surface-2);
+    color: var(--accent);
     padding: 5px 12px;
-    border-radius: 15px;
-    font-size: 0.8em;
-    margin-right: 8px;
-    display: inline-block;
-    margin-top: 15px;
-    border: 1px solid #333;
-    /* Nueva línea para suavizar la animación */
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
-}
-
-/* Nuevo bloque: Efecto al pasar el mouse */
-.tech-tag:hover {
-    transform: translateY(-4px) scale(1.05); /* Se eleva y crece un 5% */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Crea una sombra debajo */
-    border-color: #66b2ff; /* Resalta el borde con tu color azul */
-    background-color: #1e1e1e; /* Oscurece levemente el fondo */
-    cursor: pointer;
-}
-
-.github-link {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 8px 16px;
-    background-color: #3498db;
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 0.9em;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
     font-weight: 500;
-    transition: background-color 0.2s ease;
+    line-height: 1.5;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--border);
+    transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
 
-.github-link:hover {
-    background-color: #2980b9;
+/* Las etiquetas no son enlaces: solo un realce sutil del borde */
+.tech-tag:hover {
+    border-color: rgba(96, 165, 250, 0.45);
+    color: var(--accent-hover);
+}
+
+/* Icono de n8n (imagen de Simple Icons) */
+.tech-icon-img {
+    width: 1.1em;
+    height: 1.1em;
+}
+
+/* Iconos de Devicon cuyo color oficial es demasiado oscuro para el fondo */
+/* (prefijo "i." para ganar en especificidad a devicon.min.css, que se carga después) */
+i.devicon-mysql-plain.colored     { color: #5ba4cf; }
+i.devicon-flask-original.colored  { color: var(--text-strong); }
+i.devicon-csharp-plain.colored    { color: #a179dc; }
+
+/* =========================================
+   BOTONES
+   ========================================= */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+                color var(--dur-fast) var(--ease), transform var(--dur) var(--ease),
+                box-shadow var(--dur) var(--ease);
+}
+
+.btn i {
+    font-size: 1.1em;
+}
+
+.btn-sm {
+    padding: var(--space-2) var(--space-4);
+}
+
+.btn-primario {
+    background-color: var(--accent);
+    color: var(--on-accent);
+}
+
+.btn-primario:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.btn-secundario {
+    background-color: transparent;
+    color: var(--text);
+    border-color: var(--border-strong);
+}
+
+.btn-secundario:hover {
+    border-color: var(--accent);
+    color: var(--accent-hover);
 }
 
 /* --- EDUCACIÓN --- */
 .lista-educacion {
     list-style-type: none;
     padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: var(--space-4);
 }
 
-.lista-educacion li {
-    margin-bottom: 15px;
-    padding-left: 15px;
-    position: relative;
-    color: #e0e0e0;
+.estudio-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
 }
 
-.lista-educacion li::before {
-    content: "•";
-    color: #3498db;
-    font-weight: bold;
-    position: absolute;
-    left: 0;
+.estudio-titulo {
+    font-size: var(--fs-md);
+    line-height: var(--lh-snug);
 }
 
+/* Insignia de estado */
 .estado {
-    color: #aaaaaa;
-    font-size: 0.9em;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    border-radius: var(--radius-pill);
+    padding: 2px var(--space-3);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
 }
+
+.estado-ok {
+    color: var(--success);
+    background: var(--success-soft);
+    border-color: var(--success-border);
+}
+
+.estado-proceso {
+    color: var(--accent);
+    background: var(--accent-soft);
+    border-color: rgba(96, 165, 250, 0.30);
+}
+
 /* =========================================
-    DISEÑO RESPONSIVE  
-========================================= */
-@media (max-width: 900px) {
-    .app-container {
-        flex-direction: column;
-    }
-
-    /* 'Desempaqueta' el contenedor principal para poder reordenar sus hijos */
-    .main-content {
-        display: contents; 
-    }
-
-    /* 1. La portada va arriba del todo */
-    .portada-container {
-        order: 1;
-        height: 200px; /* Un poco más estrecha en celulares */
-    }
-
-    /* 2. El panel lateral se convierte en un bloque central debajo de la portada */
-    .sidebar {
-        order: 2;
-        width: 100%;
-        height: auto;
-        position: static; /* Quitamos el anclaje fijo (sticky) */
-        border-right: none;
-        border-bottom: 1px solid #333;
-        align-items: center; /* Centramos todo */
-        text-align: center;
-        padding: 20px;
-    }
-
-    /* Superponemos la foto circular sobre la portada */
-    .perfil-foto {
-        margin-top: -80px; 
-        margin-bottom: 15px;
-        width: 130px; /* Reducimos un poco el tamaño de la foto */
-        height: 130px;
-    }
-
-    /* Botones de contacto en fila en lugar de columna */
-    .contacto-links {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-    }
-
-    .contacto-links a {
-        padding: 8px 15px;
-        font-size: 0.9em;
-    }
-
-    /* 3. El contenido principal va al final */
-    .contenido-interno {
-        order: 3;
-        padding: 20px 15px;
-    }
-
-    section {
-        padding: 25px 20px;
-    }
-
-    /* Forzar que los grids (habilidades y proyectos) pasen a 1 sola columna */
-    .grid-habilidades, .grid-proyectos {
-        grid-template-columns: 1fr;
-    }
-    
-    /* Ajustar la línea de tiempo de la experiencia */
-    .timeline {
-        padding-left: 15px;
-    }
+   PÁGINA DE DETALLE DE PROYECTO
+   ========================================= */
+.detalle-pagina {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-4) var(--space-9);
 }
+
+/* Migas de navegación: en una "pastilla" de cristal propia,
+   porque van directamente sobre el fondo de partículas */
+.migas ol {
+    list-style: none;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-5) 0;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-pill);
+    background: rgba(11, 17, 32, 0.70);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    font-size: var(--fs-sm);
+    color: var(--text-subtle);
+}
+
+.migas li + li::before {
+    content: '/';
+    margin-right: var(--space-2);
+    color: var(--text-subtle);
+}
+
+.migas a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease);
+}
+
+.migas a:hover {
+    color: var(--accent-hover);
+}
+
+.migas [aria-current="page"] {
+    color: var(--text);
+}
+
+.detalle-card {
+    background: var(--surface-1);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-2);
+    padding: clamp(var(--space-5), 5vw, var(--space-8));
+}
+
+.detalle-cabecera {
+    padding-bottom: var(--space-5);
+    margin-bottom: var(--space-5);
+    border-bottom: 1px solid var(--border);
+}
+
+.detalle-eyebrow {
+    margin: 0 0 var(--space-2) 0;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.detalle-titulo {
+    font-size: var(--fs-xl);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin: 0 0 var(--space-3) 0;
+}
+
+.detalle-resumen {
+    margin: 0;
+    font-size: var(--fs-md);
+    line-height: var(--lh-snug);
+    color: var(--text-muted);
+    max-width: var(--measure);
+}
+
+.detalle-tags {
+    margin-bottom: var(--space-6);
+}
+
+.detalle-texto {
+    font-size: var(--fs-md);
+    line-height: 1.75;
+    color: var(--text);
+    max-width: var(--measure);
+    margin: 0;
+}
+
+.detalle-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-7);
+}
+
 /* =========================================
    MENÚ DE NAVEGACIÓN SUPERIOR
    ========================================= */
+/* Barra fija: se queda arriba al hacer scroll, con fondo translúcido */
 .top-nav-menu {
+    grid-area: nav;
+    min-width: 0;
+    position: sticky;
+    top: 0;
+    z-index: 20;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap; 
-    gap: 15px; 
-    margin: 30px auto 10px auto; /* 30px arriba, auto lados, 10px abajo */
-    padding: 0 15px;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-4);
+    background: rgba(11, 17, 32, 0.62);
+    backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    border-bottom: 1px solid var(--border);
 }
 
 .nav-boton {
+    flex-shrink: 0;
+    white-space: nowrap;
     background-color: transparent;
-    color: #e0e0e0;
-    border: 1px solid #66b2ff;
-    padding: 10px 22px;
-    border-radius: 6px;
+    color: var(--text);
+    border: 1px solid var(--accent);
+    padding: 10px var(--space-5);
+    border-radius: var(--radius-sm);
     text-decoration: none;
-    font-size: 0.9em;
-    font-weight: 500;
-    transition: all 0.3s ease;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease),
+                transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 
 .nav-boton:hover {
-    background-color: #66b2ff;
-    color: #121212;
+    background-color: var(--accent);
+    color: var(--on-accent);
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(102, 178, 255, 0.3);
+    box-shadow: 0 4px 10px var(--accent-glow);
 }
 
-/* Efecto de deslizamiento suave para los enlaces ancla */
-html {
-    scroll-behavior: smooth;
+/* =========================================
+   DISEÑO RESPONSIVE
+   Puntos de corte:
+     ≥ 1100px  escritorio amplio (valores base)
+     < 1100px  escritorio compacto
+     < 900px   tableta y móvil: una columna
+     < 480px   móvil pequeño: ajustes finos
+   ========================================= */
+
+/* --- Escritorio compacto --- */
+@media (max-width: 1099px) {
+    .sidebar {
+        padding: var(--space-7) var(--space-5);
+    }
+
+    .perfil-foto {
+        width: 136px;
+        height: 136px;
+    }
+
+    section {
+        padding: var(--space-6);
+    }
+}
+
+/* --- Tableta y móvil: una sola columna --- */
+@media (max-width: 899px) {
+    .app-container {
+        --nav-h: 64px;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: none;
+        grid-template-areas:
+            "portada"
+            "sidebar"
+            "nav"
+            "main";
+    }
+
+    .portada-container {
+        height: 180px;
+    }
+
+    /* El panel lateral pasa a ser un bloque centrado bajo la portada */
+    .sidebar {
+        position: static;          /* sin anclaje fijo */
+        height: auto;
+        overflow: visible;
+        border-right: none;
+        align-items: center;
+        text-align: center;
+        padding: 0 var(--space-4) var(--space-6);
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    /* Foto superpuesta sobre la portada */
+    .perfil-foto {
+        width: 128px;
+        height: 128px;
+        margin-top: -64px;
+        margin-bottom: var(--space-4);
+    }
+
+    .sidebar-rol {
+        margin-bottom: var(--space-5);
+    }
+
+    /* Contacto: botones en una fila con áreas táctiles ≥ 44px
+       y la ubicación en su propia línea */
+    .contacto-links {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-2);
+        max-width: 420px;
+    }
+
+    .contacto-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: var(--space-2) var(--space-3);
+        box-sizing: border-box;
+    }
+
+    .contacto-links span {
+        grid-column: 1 / -1;
+        padding-top: var(--space-2);
+    }
+
+    /* Menú en tableta: centrado, puede pasar a dos líneas */
+    .top-nav-menu {
+        gap: var(--space-2);
+        padding: var(--space-3) var(--space-4);
+        border-top: 1px solid var(--border);
+    }
+
+    .nav-boton {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        box-sizing: border-box;
+        padding: var(--space-2) var(--space-4);
+    }
+
+    /* Desplazar un botón en pantallas táctiles no debe "saltar" */
+    .nav-boton:hover {
+        transform: none;
+    }
+
+    .contenido-interno {
+        padding: var(--space-5) var(--space-4) var(--space-8);
+    }
+
+    section {
+        padding: var(--space-6) var(--space-5);
+        margin-bottom: var(--space-5);
+    }
+
+    .grid-habilidades,
+    .grid-proyectos {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .habilidad-grupo {
+        padding: var(--space-4);
+    }
+
+    .timeline {
+        --timeline-gutter: var(--space-5);
+    }
+}
+
+/* --- Móvil: menú en una sola fila con scroll horizontal --- */
+@media (max-width: 599px) {
+    .top-nav-menu {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        scroll-snap-type: x proximity;
+        scroll-padding-inline: var(--space-4);
+        scrollbar-width: none;
+        padding-right: 0;
+    }
+
+    .top-nav-menu::-webkit-scrollbar {
+        display: none;
+    }
+
+    .nav-boton {
+        scroll-snap-align: start;
+    }
+
+    /* Degradado pegado al borde derecho (no se mueve con el scroll)
+       como pista de que hay más botones */
+    .top-nav-menu::after {
+        content: '';
+        position: sticky;
+        right: 0;
+        flex: 0 0 40px;
+        margin-left: -40px;
+        align-self: stretch;
+        pointer-events: none;
+        background: linear-gradient(to right, transparent, var(--bg) 85%);
+    }
+}
+
+/* --- Móvil pequeño --- */
+@media (max-width: 479px) {
+    .portada-container {
+        height: 150px;
+    }
+
+    .perfil-foto {
+        width: 112px;
+        height: 112px;
+        margin-top: -56px;
+    }
+
+    .contenido-interno {
+        padding-inline: var(--space-3);
+    }
+
+    section {
+        padding: var(--space-5) var(--space-4);
+        border-radius: var(--radius-md);
+    }
+
+    .proyecto-card,
+    .habilidad-grupo,
+    .estudio-card {
+        padding: var(--space-4);
+    }
+
+    /* En la página de detalle, botones a todo el ancho */
+    .detalle-acciones .btn {
+        width: 100%;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+}
+
+/* =========================================
+   MOVIMIENTO REDUCIDO
+   Para quien lo configura en su sistema operativo:
+   sin desplazamiento suave, sin elevaciones ni transiciones.
+   ========================================= */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .proyecto-card:hover,
+    .nav-boton:hover,
+    .btn-primario:hover,
+    .enlace-detalle:hover span {
+        transform: none;
+    }
 }
